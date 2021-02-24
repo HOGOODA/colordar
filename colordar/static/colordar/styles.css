@@ -1,0 +1,111 @@
+.calendar {
+    width: 98%;
+    margin: auto;
+    font-size: 15px;
+    
+  }
+  
+  .calendar tr, .calendar td {
+    border: 1px solid rgb(228, 228, 228);
+  }
+  
+  .calendar th {
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-family: helvetica;
+  }
+  
+  .calendar td {
+    width: 200px;
+    height: 150px;
+    padding: 20px 0px 0px 5px;
+  }
+  
+  .month {
+    font-size: 25px;
+    color:#1AAB8A;
+  }
+  
+  .date {
+    font-size: 16px;
+    color: #98a0a6;
+  }
+  
+  ul {
+    height: 100%;
+    padding: 0px 5px 0px 20px;
+  }
+  
+  a {
+    color: #17a2b8;
+    text-decoration: none
+  }
+
+  th {
+    color:slategray;
+  }
+
+
+  
+  /* .btn {
+    outline: none;
+    color: black;
+    background-color: transparent;
+    box-shadow: 0 0 0 0;
+    
+  } */
+  
+  .clearfix {
+    margin: 15px;
+    display: grid;
+    grid-template-columns:  1fr 1fr 1fr;
+  }
+
+  button{
+    background:#1AAB8A;
+    color:#fff;
+    border:none;
+    height:40px;
+    font-size:1.6em;
+    padding:0 2em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  button:hover{
+    background:#fff;
+    color:#1AAB8A;
+  }
+  button:before,button:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: #3cb196;
+    transition:400ms ease all;
+  }
+  button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  button:hover:before,button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+  
+  /* .btnleft {
+    float: left;
+  }
+  
+  .btnright {
+    float: right;
+  }
+
+  .btncenter{
+    
+  } */

@@ -1,0 +1,21 @@
+<!-- cal/templates/cal/calendar.html -->
+
+{% extends 'colordar/base.html' %}
+
+{% block content %}
+
+<div class="clearfix">
+	<!-- <a class="button btn-info left" href="{% url 'colordar:calendar' %}?{{ prev_month }}"> Previous Month </a>
+	<a class="button btn-info right" href="{% url 'colordar:calendar' %}?{{ next_month }}"> Next Month </a> -->
+    <button type="button btn-info left" class="btnleft" onclick=location.href="{% url 'colordar:calendar' %}?{{ prev_month }}"> Previous Month</button>
+    <button type="button btn-info center" class="btncenter" onclick=location.href="{% url 'colordar:event_new' %}"> Add Your Today</button>
+    <button type="button btn-info right" class="btnright" onclick=location.href="{% url 'colordar:calendar' %}?{{ next_month }}"> Next Month</button>
+    
+</div>
+
+
+{{ calendar }}
+
+
+
+{% endblock %}
