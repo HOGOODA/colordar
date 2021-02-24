@@ -6,4 +6,4 @@ db.sqlite3
 /media/images
 .DS_Store
 secrets.json
-pyvenv.cfgg
+pyvenv.cfg
