@@ -8,3 +8,4 @@ db.sqlite3
 secrets.json
 pyvenv.cfg
 Lib
+Scripts
