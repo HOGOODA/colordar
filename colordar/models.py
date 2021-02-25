@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 
 class Event(models.Model):
-    title = models.CharField(max_length=50, help_text='최대 50자 내로 입력가능합니다.', verbose_name='제목')
+    title = models.CharField(max_length=50,  verbose_name='제목')
     description = models.TextField(default='', verbose_name='내용')
     create_date = models.DateField(verbose_name='내용', auto_now_add=True)
 

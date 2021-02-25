@@ -1,7 +1,7 @@
 .calendar {
     width: 98%;
     margin: auto;
-    font-size: 15px;
+    font-size: 12px;
     
   }
   
@@ -17,11 +17,14 @@
   }
   
   .calendar td {
+
     width: 200px;
     height: 150px;
     padding: 20px 0px 0px 5px;
   }
-  
+  .calendar td span{
+    margin: 10px 0px 0px 0px;
+  }
   .month {
     font-size: 25px;
     color:#1AAB8A;
@@ -35,11 +38,24 @@
   ul {
     height: 100%;
     padding: 0px 5px 0px 20px;
+    list-style-type: none;
   }
   
+  li {
+    background: url('greensquare.png') no-repeat left top;
+    background-size: 15px;
+    height: 15px;
+    padding-left: 20px;
+    padding-top: 3px;
+  }
+
+
+
   a {
-    color: #17a2b8;
+    color: #1AAB8A;
     text-decoration: none
+    
+
   }
 
   th {
@@ -109,3 +125,30 @@
   .btncenter{
     
   } */
+
+
+.event{
+  
+  margin: 15px;
+    display: grid;
+    grid-template-columns:  1fr;
+
+}
+
+.form {
+  margin: auto;
+}
+
+.form input, .form select, .form textarea {
+  border-radius: 5px;
+  border: 1px solid #17a2b8;
+  outline: none;
+  background: none;
+  padding: 5px;
+  width: 100%;
+
+}
+
+.submit{
+  text-align: center;
+}

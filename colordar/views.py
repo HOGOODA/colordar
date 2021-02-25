@@ -10,6 +10,13 @@ from .models import *
 from .utils import Calendar
 import calendar
 from .forms import EventForm
+from .predict_DL import predict_mood
+import urllib.request
+from soynlp import DoublespaceLineCorpus
+from soynlp.word import WordExtractor
+from soynlp.tokenizer import LTokenizer
+from tensorflow.keras.preprocessing.text import Tokenizer
+import numpy as np
 
 def index(request):
     return HttpResponse('hello')
@@ -71,6 +78,39 @@ def event(request, event_id=None):
     
     form = EventForm(request.POST or None, instance=instance)
     if request.POST and form.is_valid():
+        print(form.cleaned_data)
+        diary=form.cleaned_data['description']
+        tokenized_diary= l_tokenizer.tokenize(diary)
+        vocab_size=len(tokenized_diary)
+        print(vocab_size)
+        tokenizer = Tokenizer(vocab_size, oov_token = 'OOV')
+        tokenizer.fit_on_texts(tokenized_diary)
+        tokenized_number= tokenizer.texts_to_sequences(tokenized_diary)
+        # tokenized_np= np.asarray(tokenized_number).astype('float32')
+        print(tokenized_number)
         form.save()
+        
         return HttpResponseRedirect(reverse('colordar:calendar'))
     return render(request, 'colordar/event.html', {'form': form})
+
+
+urllib.request.urlretrieve("https://raw.githubusercontent.com/lovit/soynlp/master/tutorials/2016-10-20.txt",
+filename="2016-10-20.txt")
+
+# (3-3) 훈련 데이터를 다수의 문서로 분리
+corpus = DoublespaceLineCorpus("2016-10-20.txt")
+len(corpus)
+
+# (3-5 )학습완료!
+word_extractor = WordExtractor()
+word_extractor.train(corpus)
+word_score_table = word_extractor.extract()
+
+
+scores = {word:score.cohesion_forward for word, score in word_score_table.items()}
+l_tokenizer = LTokenizer(scores=scores)
+
+
+
+
+
