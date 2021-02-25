@@ -15,9 +15,9 @@ class Event(models.Model):
         return self.title
 
 
-    def to_json(self):
-        return{
-            "title":self.title,
-            "content":self.content,
-            "create_date":self.create_date
-        }
+    # def to_json(self):
+    #     return{
+    #         "title":self.title,
+    #         "content":self.content,
+    #         "create_date":self.create_date
+    #     }
