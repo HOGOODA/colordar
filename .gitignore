@@ -9,4 +9,4 @@ secrets.json
 pyvenv.cfg
 Lib
 Scripts
-media
+media/ktrain_bert_model
