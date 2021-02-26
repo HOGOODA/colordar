@@ -17,6 +17,43 @@
   {% block content %}
   {% endblock %}
 
-  
+  <!-- <script src="{% static 'colordar/script.js' %}"></script> -->
+  <script>
+    const a='{{result|escapejs}}';
+    const colorObject=document.getElementById(a.toString());
+    console.log(colorObject);
+    nextSibling = colorObject.nextElementSibling;
+    if (nextSibling.children.length > 0) {
+      switch('{{today_color|escapejs}}'){
+        case '슬픔' :
+            nextSibling.style.backgroundColor='#C0C0C0';
+            break;
+        case '공포' :
+            nextSibling.style.backgroundColor='#C2ADCE';
+            break;
+        case '분노' :
+            nextSibling.style.backgroundColor='#DC7575';
+            break;
+        case '혐오' :
+            nextSibling.style.backgroundColor='#DCAD75';
+            break;
+        case '놀람' :
+            nextSibling.style.backgroundColor='#88F8F1';
+            break;
+        case '행복' :
+            nextSibling.style.backgroundColor='#A1FABF';
+            break;
+        default :
+            nextSibling.style.backgroundColor='#FFFFFF';
+            break;
+
+      }
+      
+    }else{
+      console.log("not");
+    }
+
+  </script>
+
 </body>
 </html>

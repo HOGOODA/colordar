@@ -10,13 +10,15 @@ from .models import *
 from .utils import Calendar
 import calendar
 from .forms import EventForm
-from .predict_DL import predict_mood
-import urllib.request
-from soynlp import DoublespaceLineCorpus
-from soynlp.word import WordExtractor
-from soynlp.tokenizer import LTokenizer
-from tensorflow.keras.preprocessing.text import Tokenizer
+from .predict_DL import predict_emotion
+# from soynlp.tokenizer import LTokenizer
+# from tensorflow.keras.preprocessing.text import Tokenizer
 import numpy as np
+import pickle 
+import gzip
+from django.conf import settings
+
+diary=''
 
 def index(request):
     return HttpResponse('hello')
@@ -46,6 +48,10 @@ class CalendarView(generic.ListView):
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = prev_month(get_month)
         context['next_month'] = next_month(get_month)
+        calculate_day=datetime.today()
+        context['result']=calculate_day.day
+        context['today_color']= get_color()
+        
         return context
 
 def get_date(req_day):
@@ -80,37 +86,41 @@ def event(request, event_id=None):
     if request.POST and form.is_valid():
         print(form.cleaned_data)
         diary=form.cleaned_data['description']
-        tokenized_diary= l_tokenizer.tokenize(diary)
-        vocab_size=len(tokenized_diary)
-        print(vocab_size)
-        tokenizer = Tokenizer(vocab_size, oov_token = 'OOV')
-        tokenizer.fit_on_texts(tokenized_diary)
-        tokenized_number= tokenizer.texts_to_sequences(tokenized_diary)
-        # tokenized_np= np.asarray(tokenized_number).astype('float32')
-        print(tokenized_number)
-        form.save()
-        
+        post=form.save(commit=False)
+        post.analyzed=get_predict(diary)
+        post.save()
+        print(post)
+
         return HttpResponseRedirect(reverse('colordar:calendar'))
     return render(request, 'colordar/event.html', {'form': form})
 
 
-urllib.request.urlretrieve("https://raw.githubusercontent.com/lovit/soynlp/master/tutorials/2016-10-20.txt",
-filename="2016-10-20.txt")
+def get_predict(diary):
+    if diary=='':
+        return 9
+    else:
+        # base_url = settings.MEDIA_ROOT_URL + settings.MEDIA_URL
+        # pickle_url = base_url + 'testPickleFile.pickle'
+        # with gzip.open(pickle_url,'rb') as f:
+        #     data = pickle.load(f)
+        # scores = {word:score.cohesion_forward for word, score in data.items()}
+        # l_tokenizer = LTokenizer(scores=scores)
 
-# (3-3) 훈련 데이터를 다수의 문서로 분리
-corpus = DoublespaceLineCorpus("2016-10-20.txt")
-len(corpus)
+        # tokenized_diary= l_tokenizer.tokenize(diary)
+        # return tokenized_diary
 
-# (3-5 )학습완료!
-word_extractor = WordExtractor()
-word_extractor.train(corpus)
-word_score_table = word_extractor.extract()
+        # vocab_size=len(tokenized_diary)
+        # print(vocab_size)
+        # tokenizer = Tokenizer(vocab_size, oov_token = 'OOV')
+        # tokenizer.fit_on_texts(tokenized_diary)
+        # tokenized_number= tokenizer.texts_to_sequences(tokenized_diary)
+        # tokenized_np= np.asarray(tokenized_number).astype('float32')
 
-
-scores = {word:score.cohesion_forward for word, score in word_score_table.items()}
-l_tokenizer = LTokenizer(scores=scores)
-
+        return predict_emotion(diary)
 
 
-
-
+def get_color():
+    try:
+        return Event.objects.get(create_date=date.today()).analyzed
+    except:
+        return 9

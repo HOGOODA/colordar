@@ -1,0 +1,39 @@
+cmd 에서 
+
+1. 텐서플로우 설치
+pip install tensorflow==2.3
+
+2. ktrain 설치 
+pip install ktrain
+
+
+
+atom에서 
+3. predict_DL.py 
+
+import ktrain
+from ktrain import text
+from django.conf import settings
+
+
+def Predict_emotion(sentence):
+
+    base_url = settings.MEDIA_ROOT_URL + settings.MEDIA_URL # == './media/'
+    model_url = base_url + 'ktrain_bert_model'
+    # model_loaded = joblib.load(model_url)
+
+    p = ktrain.load_predictor(model_url)
+    predict = p.predict(sentence)
+
+    return predict
+
+
+
+4. views.py 
+
+def predict_color(request):      #이부분은 수정하셔야 될 것 같아요..!
+    text_emotion = str(request.POST['emotion_text'])   
+    sentence = text_emotion
+    predict_result = Predict_emotion(sentence)
+    context = {'predict_result' : predict_result}
+    return render(request, 'color_cal/color_result.html', context)

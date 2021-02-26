@@ -15,10 +15,10 @@ class Calendar(HTMLCalendar):
 		d = ''
 		for event in events_per_day:
 			# d += f'<li> {event.title} </li>'
-			d += f'<li> {event.get_html_url} </li>'
+			d += f'<li class="list"> {event.get_html_url} </li>'
 
 		if day != 0:
-			return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
+			return f"<td><span class='date' id={day}>{day}</span><ul class={day}> {d} </ul></td>"
 		return '<td></td>'
 
 	# week as tr 

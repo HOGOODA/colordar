@@ -5,6 +5,7 @@ class Event(models.Model):
     title = models.CharField(max_length=50,  verbose_name='제목')
     description = models.TextField(default='', verbose_name='내용')
     create_date = models.DateField(verbose_name='내용', auto_now_add=True)
+    analyzed = models.CharField(max_length=3)
 
     @property
     def get_html_url(self):
@@ -15,9 +16,10 @@ class Event(models.Model):
         return self.title
 
 
-    # def to_json(self):
-    #     return{
-    #         "title":self.title,
-    #         "content":self.content,
-    #         "create_date":self.create_date
-    #     }
+    def to_json(self):
+        return{
+            "title":self.title,
+            "description":self.description,
+            "create_date":self.create_date,
+            "analyzed":self.analyzed
+        }
